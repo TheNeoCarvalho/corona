@@ -27,8 +27,8 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Links"
         component={LinksScreen}
         options={{
-          title: 'Brazil',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-map-marker" />,
+          title: 'Brasil',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-map" />,
         }}
       />
       
@@ -41,8 +41,8 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Home':
-      return 'Coronavirus data numbers';
+      return 'Coronavirus no Mundo';
     case 'Links':
-      return 'More info';
+      return 'Coronavirus no Brazil';
   }
 }

@@ -2,7 +2,11 @@ import React, { useEffect, useState} from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
-import styled from 'styled-components';
+//import AnimateNumber from 'react-native-animate-number';
+import PTRView from 'react-native-pull-to-refresh';
+import AnimateNumber from '@bankify/react-native-animate-number'
+
+import styled from 'styled-components/native';
 import { MonoText } from '../components/StyledText';
 import axios from 'axios';
 
@@ -12,7 +16,8 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items:center;
-  padding: 5px 15px
+  padding: 5px 15px;
+  background: #F7FFF6;
 `;
 
 const Box = styled.View`
@@ -20,13 +25,15 @@ const Box = styled.View`
   justify-content: center;
   align-items:center;
   margin: 10px 20px;
-  background: rgba(0,0,0,0.5);
-  width: 90%;
+  background: #8491A3;
+  width: 280px;
+  border-radius: 5px
 `;
 
 const Text = styled.Text`
   font-size: 24px;
-  color: #fff;
+  font-weight: 700;
+  color: ${ props =>  props.color ? props.color: '#fff' };
 `;
 
 const Image = styled.Image`
@@ -37,36 +44,47 @@ const Image = styled.Image`
 `;
 
 export default function HomeScreen() {
-  const [dados, setDados] = useState([]);
+  const [confirmed, setConfirmed] = useState('');
+  const [recovered, setRecovered] = useState('');
+  const [deaths, setDeaths] = useState('');
 
   useEffect(()=>{
-
-    async function loadData() {
-      const response = await axios.get('https://covid19.mathdro.id/api');
-      setDados(response.data);
-    }
-
     loadData();
   },[])
 
+  async function loadData() {
+    const response = await axios.get("https://covid19.mathdro.id/api");
+    setConfirmed(parseInt(response.data.confirmed.value));
+    setRecovered(parseInt(response.data.recovered.value));
+    setDeaths(parseInt(response.data.deaths.value));
+  }
+
   return (
     <Container>
-      <Box>
-        <Text>Confirmed</Text>
-        <Text>{ dados.confirmed.value }</Text>
-      </Box>
+    <Text color="black">Casos</Text>
+      <PTRView onRefresh={loadData} >
+        <Box>
+          <Text>Confirmados</Text>
+          <Text color="green">
+            <AnimateNumber value={confirmed} timing="linear"/>
+        </Text>
+        </Box>
 
-      <Box>
-        <Text>Recovered</Text>
-        <Text>{ dados.recovered.value }</Text>
-      </Box>
+        <Box>
+          <Text>Recuperado(a)</Text>
+          <Text color="orange">
+          <AnimateNumber value={recovered} timing="linear"/>
+          </Text>
+        </Box>
 
-      <Box>
-        <Text>Deaths</Text>
-        <Text>{ dados.deaths.value }</Text>
-      </Box>
-      <Image source={{uri: dados.image}} />
-    </Container>
+        <Box>
+          <Text>Mortes</Text>
+          <Text color="red">
+          <AnimateNumber value={deaths} timing="linear"/>  
+          </Text>
+        </Box>
+    </PTRView>
+      </Container>
   );
 }
 
