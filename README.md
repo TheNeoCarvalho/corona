@@ -5,7 +5,7 @@ App simples consumindo [API](https://covid19.mathdro.id/api/) do covid19
 Tecnologias usadas no app
 * [React Native]
 * [Expo]
-* 
+  
 ### Installation
 
 Clone o repositório
