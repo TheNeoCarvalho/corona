@@ -19,6 +19,8 @@ $ npm i
 ou 
 $ yarn
 ```
+### Rodar a aplicação
+
 ```sh
 $ npm start 
 ou
