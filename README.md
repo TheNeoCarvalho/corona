@@ -8,9 +8,10 @@ Tecnologias usadas no app
   
 ### Installation
 
-Clone o repositório
+#### Clone o repositório
 [corona](https://github.com/TheNeoCarvalho/corona.git)
-Instalar as dependencias do projeto.
+
+#### Instalar as dependencias do projeto.
 
 ```sh
 $ cd corona
